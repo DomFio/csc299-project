@@ -1,3 +1,4 @@
+
 I am in a Vibe coding course in college, and I need some ideas for the project. This is an overview of our project.This project revolves around the use of AI-coding assistants to plan, specify, develop, and test your own software that includes:
  personal knowledge management system (PKMS)personal task management systema terminal-based chat interface to interact with your stored knowledge and tasksAI agents that interact with the stored knowledge or tasksThe software must be written in Python, and must run portably on Windows, OSX, Linux.Your state should be stored in JSON documents, a SQLite database, or a Neo4J database.These are the required deliverables.Your deliverables for this project should be in a GitHub repository that includes:
  the final version of your softwarefine-grained commit history of software development including specifications, tests, documentationprototype(s)a file video.txt that contains the URL to a YouTube video with a 6-8 minute video demonstrating your software and its developmentHere are some creative project ideas that build on the core requirements while showcasing different approaches:
@@ -596,4 +597,4 @@ git commit -m "Pre-assignment: Save AI conversation on project ideas"
 Verify It's There
 After pushing, check your GitHub repo in the browser to confirm the conversation file is visible.
 
-Would you like me to help format this specific conversation in a clean markdown structure that's ready to past
+Would you like me to help format this specific conversation in a clean markdown structure that's ready to paste into a file?
