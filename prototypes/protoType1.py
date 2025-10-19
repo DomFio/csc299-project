@@ -202,6 +202,27 @@ class QuestLog:
             print(f"   Type: {quest['type'].title()} | Skill: {quest['skill'].title()}")
             if quest['description']:
                 print(f"   Description: {quest['description']}")
+        
+        print(f"\n📊 Total Active Quests: {len(active_quests)}")
+    
+    def view_completed_quests(self):
+        """Display all completed quests."""
+        print("\n=== COMPLETED QUESTS ===")
+        
+        if not self.quests["completed"]:
+            print("No completed quests yet. Complete your first quest to start your legend!")
+            return
+        
+        for idx, quest in enumerate(self.quests["completed"], 1):
+            icon = {"main": "⚔️", "side": "📜", "daily": "🔄"}.get(quest["type"], "📝")
+            completed_date = quest['completed_at'][:10] if quest.get('completed_at') else "Unknown"
+            print(f"\n{idx}. {icon} {quest['title']} ✅")
+            print(f"   Difficulty: {quest['difficulty']} | XP Earned: {quest['xp_reward']}")
+            print(f"   Completed: {completed_date}")
+            if quest['description']:
+                print(f"   Description: {quest['description']}")
+        
+        print(f"\n📊 Total Quests Completed: {len(self.quests['completed'])}")
     
     def complete_quest(self):
         """Mark a quest as completed."""
@@ -379,14 +400,15 @@ class QuestLog:
             print(f"\nLevel {self.player['level']} {self.player['name']} | {self.player['xp']} XP")
             print(f"Active Quests: {len(self.quests['active'])} | Completed: {self.player['quests_completed']}")
             
-            print("\n1. 📜 View Quests")
+            print("\n1. 📜 View Active Quests")
             print("2. ✨ Create Quest")
             print("3. ✅ Complete Quest")
-            print("4. 👤 Character Sheet")
-            print("5. 📝 Add Knowledge Note")
-            print("6. 📚 View Knowledge Base")
-            print("7. 💬 Chat with Quest Advisor")
-            print("8. 🚪 Exit")
+            print("4. 📋 View Completed Quests")
+            print("5. 👤 Character Sheet")
+            print("6. 📝 Add Knowledge Note")
+            print("7. 📚 View Knowledge Base")
+            print("8. 💬 Chat with Quest Advisor")
+            print("9. 🚪 Exit")
             
             choice = input("\nChoose an option: ").strip()
             
@@ -397,18 +419,20 @@ class QuestLog:
             elif choice == "3":
                 self.complete_quest()
             elif choice == "4":
-                self.view_character()
+                self.view_completed_quests()
             elif choice == "5":
-                self.add_note()
+                self.view_character()
             elif choice == "6":
-                self.view_notes()
+                self.add_note()
             elif choice == "7":
-                self.simple_chat()
+                self.view_notes()
             elif choice == "8":
+                self.simple_chat()
+            elif choice == "9":
                 print("\n⚔️  Your progress has been saved. Until next time, adventurer! ⚔️\n")
                 break
             else:
-                print("\n❌ Invalid option! Please choose 1-8.")
+                print("\n❌ Invalid option! Please choose 1-9.")
 
 
 def main():
