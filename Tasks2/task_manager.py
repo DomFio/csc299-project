@@ -354,6 +354,70 @@ class TaskManager:
         
         print(f"\n📊 Total: {len(self.knowledge['notes'])} note(s)")
     
+    def delete_note(self):
+        """Delete a note from knowledge base."""
+        print("\n=== DELETE KNOWLEDGE NOTE ===")
+        
+        if not self.knowledge["notes"]:
+            print("No notes to delete!")
+            return
+        
+        # Show all notes
+        for idx, note in enumerate(self.knowledge["notes"], 1):
+            print(f"{idx}. 📝 {note['title']}")
+        
+        try:
+            choice = int(input("\nEnter note number to delete (0 to cancel): "))
+            if choice == 0:
+                return
+            
+            if 1 <= choice <= len(self.knowledge["notes"]):
+                note = self.knowledge["notes"][choice - 1]
+                confirm = input(f"Delete '{note['title']}'? This cannot be undone. (yes/no): ").strip().lower()
+                
+                if confirm == "yes":
+                    self.knowledge["notes"].pop(choice - 1)
+                    self.save_all()
+                    print(f"\n🗑️  Note deleted: '{note['title']}'")
+                else:
+                    print("Deletion cancelled.")
+            else:
+                print("Invalid note number!")
+        except ValueError:
+            print("Please enter a valid number!")
+    
+    def delete_note(self):
+        """Delete a note from knowledge base."""
+        print("\n=== DELETE KNOWLEDGE NOTE ===")
+        
+        if not self.knowledge["notes"]:
+            print("No notes to delete!")
+            return
+        
+        # Show all notes
+        for idx, note in enumerate(self.knowledge["notes"], 1):
+            print(f"{idx}. 📝 {note['title']}")
+        
+        try:
+            choice = int(input("\nEnter note number to delete (0 to cancel): "))
+            if choice == 0:
+                return
+            
+            if 1 <= choice <= len(self.knowledge["notes"]):
+                note = self.knowledge["notes"][choice - 1]
+                confirm = input(f"Delete '{note['title']}'? This cannot be undone. (yes/no): ").strip().lower()
+                
+                if confirm == "yes":
+                    self.knowledge["notes"].pop(choice - 1)
+                    self.save_all()
+                    print(f"\n🗑️  Note deleted: '{note['title']}'")
+                else:
+                    print("Deletion cancelled.")
+            else:
+                print("Invalid note number!")
+        except ValueError:
+            print("Please enter a valid number!")
+    
     def simple_chat(self):
         """Simple chat interface (AI integration planned)."""
         print("\n=== TASK ASSISTANT ===")
@@ -405,8 +469,9 @@ class TaskManager:
             print("7. 🔍 Search Tasks")
             print("8. 📝 Add Knowledge Note")
             print("9. 📚 View Knowledge Base")
-            print("10. 💬 Chat with Assistant")
-            print("11. 🚪 Exit")
+            print("10. 🗑️  Delete Knowledge Note")
+            print("11. 💬 Chat with Assistant")
+            print("12. 🚪 Exit")
             
             choice = input("\nChoose an option: ").strip()
             
@@ -429,12 +494,14 @@ class TaskManager:
             elif choice == "9":
                 self.view_notes()
             elif choice == "10":
-                self.simple_chat()
+                self.delete_note()
             elif choice == "11":
+                self.simple_chat()
+            elif choice == "12":
                 print("\n📁 All changes saved. Goodbye!\n")
                 break
             else:
-                print("\n❌ Invalid option! Please choose 1-11.")
+                print("\n❌ Invalid option! Please choose 1-12.")
 
 
 def main():

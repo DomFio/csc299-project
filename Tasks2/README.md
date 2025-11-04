@@ -51,8 +51,9 @@ When you run the application, you'll see a menu with these options:
 7. **Search Tasks** - Find tasks by keyword
 8. **Add Knowledge Note** - Save a note to your knowledge base
 9. **View Knowledge Base** - See all your notes
-10. **Chat with Assistant** - Simple command interface
-11. **Exit** - Save and quit
+10. **Delete Knowledge Note** - Permanently remove a note
+11. **Chat with Assistant** - Simple command interface
+12. **Exit** - Save and quit
 
 ### Creating a Task
 
@@ -153,8 +154,10 @@ In the chat interface (option 10), you can use:
 - Use **tags** to organize related tasks (e.g., "work", "personal", "urgent")
 - Set **due dates** for time-sensitive tasks
 - Use the **knowledge base** to store important information, code snippets, or notes
+- **Delete notes** you no longer need to keep your knowledge base organized
 - **Search** works on titles, descriptions, priorities, and tags
-- Tasks are automatically saved after every action
+- Tasks and notes are automatically saved after every action
+- Use confirmation prompts carefully - deletions cannot be undone!
 
 ## Troubleshooting
 
