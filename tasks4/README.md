@@ -1,6 +1,6 @@
 # Task 4 - OpenAI API Task Summarizer
 
-A command-line application that uses OpenAI's GPT-4o-mini to automatically summarize paragraph-length task descriptions into short phrases.
+A command-line application that uses OpenAI's GPT-5-mini to automatically summarize paragraph-length task descriptions into short phrases.
 
 ## Features
 
