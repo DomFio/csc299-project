@@ -11,12 +11,15 @@ Features:
 - Knowledge base for storing notes
 - Simple chat interface (AI integration planned)
 """
-
+from dotenv import load_dotenv
+from openai import OpenAI
 import json
 import os
 from datetime import datetime
 from pathlib import Path
 import uuid
+
+load_dotenv()
 
 
 class TaskManager:
@@ -419,35 +422,65 @@ class TaskManager:
             print("Please enter a valid number!")
     
     def simple_chat(self):
-        """Simple chat interface (AI integration planned)."""
-        print("\n=== TASK ASSISTANT ===")
-        print("(Simple version - AI integration coming soon!)")
-        print("\nAvailable commands:")
-        print("  'tasks' - Show all tasks")
-        print("  'active' - Show active tasks")
-        print("  'completed' - Show completed tasks")
-        print("  'notes' - Show knowledge base")
-        print("  'help' - Show available commands")
-        print("  'exit' - Return to main menu")
+        """AI-powered chat interface using OpenAI."""
+        print("\n=== AI TASK ASSISTANT ===")
+        print("Ask me anything about your tasks, productivity, or get suggestions!")
+        print("Type 'exit' to return to main menu.\n")
+        
+        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
         
         while True:
-            user_input = input("\nYou: ").strip().lower()
+            user_input = input("You: ").strip()
             
-            if user_input == "exit":
+            if user_input.lower() == "exit":
+                print("\nReturning to main menu...")
                 break
-            elif user_input == "tasks":
-                self.list_tasks()
-            elif user_input == "active":
-                self.list_tasks(filter_status="active")
-            elif user_input == "completed":
-                self.list_tasks(filter_status="completed")
-            elif user_input == "notes":
-                self.view_notes()
-            elif user_input == "help":
-                print("\nAssistant: Available commands:")
-                print("  'tasks', 'active', 'completed', 'notes', 'help', 'exit'")
-            else:
-                print("\nAssistant: I don't understand that command. Type 'help' for available commands.")
+            
+            if not user_input:
+                continue
+            
+            # Build context about user's tasks
+            active_count = len(self.tasks["active"])
+            completed_count = len(self.tasks["completed"])
+            notes_count = len(self.knowledge["notes"])
+            
+            # Get task summaries
+            active_tasks_summary = []
+            for task in self.tasks["active"][:5]:
+                active_tasks_summary.append(
+                    f"- {task['title']} (Priority: {task['priority']}, Due: {task.get('due_date', 'No date')})"
+                )
+            
+            context = f"""You are a helpful task management assistant. The user has:
+            - {active_count} active tasks
+            - {completed_count} completed tasks  
+            - {notes_count} knowledge base notes
+
+            Active tasks:
+            {chr(10).join(active_tasks_summary) if active_tasks_summary else 'No active tasks'}
+
+            Help the user with task management, productivity tips, and answering questions."""
+            
+            messages = [
+                {"role": "system", "content": context},
+                {"role": "user", "content": user_input}
+            ]
+            
+            try:
+                print("\nAssistant: ", end="", flush=True)
+                
+                completion = client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=messages
+                )
+                
+                response = completion.choices[0].message.content
+                print(response)
+                print()
+                
+            except Exception as e:
+                print(f"Error: {e}")
+                print("Check your API key and connection.\n")
     
     def main_menu(self):
         """Display main menu and handle user input."""
